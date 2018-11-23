@@ -3,7 +3,7 @@
 //render pics to page
 const hornsGallery = [];
 const keywords = [];
-const keywordsFinal = [0];
+let keywordsFinal = [0];
 
 function horns(obj) {
     this.title = obj.title;
@@ -13,6 +13,7 @@ function horns(obj) {
 
     hornsGallery.push(this);
     keywords.push(obj.keyword)
+    keywordsFinal = [...new Set(keywords)];
 }
 
     horns.prototype.render = function() {
@@ -45,7 +46,7 @@ function horns(obj) {
       horns.render();
   
       hornsGallery.forEach(horns => {
-        console.log()
+  
       })
         })
   
@@ -73,14 +74,6 @@ function horns(obj) {
   }
 
   popFilter();
-
-//   $.get('data/page-1.json', 'json')
-//   .then(data => {}
-//   var $dropdown = $("#dropdown");
-//   $.each(result, function() {
-//   $dropdown.append($("<option />").text(this.title));
-// });
-  
 
 
 //add button to hide all pics but ones with selected data types
