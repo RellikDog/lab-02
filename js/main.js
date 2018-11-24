@@ -7,6 +7,7 @@ const keywordsFinal = [];
 let getArray = [];
 let removeDupl = [];
 const lim = removeDupl.length;
+let hornsImg;
 
 function horns(obj) {
   this.title = obj.title;
@@ -82,7 +83,18 @@ $('select[name="horn-picks"]').on('change', function() {
   $('h2').hide()
   $('img').hide()
   $('p').hide()
-  $('img[id="${$selection}"]').show()
-  console.log($('img[id="${$selection}"]').show())
- })
+  for(let i in hornsGallery) {
+    if($('select').val() === hornsGallery[i].keyword) {
+      hornsImg = hornsGallery[i].image_url;
+    }
+    $('main').append('<div class="clone"></div>');
+    let $clone = $('div[class="clone"]');
+    // $selection = $('select[name="horn-picks"]');
+    $clone.find('img').attr('src', hornsImg);
+    console.log(hornsImg)
+  }
+ 
+})
+
+ 
 
