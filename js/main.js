@@ -3,77 +3,86 @@
 //render pics to page
 const hornsGallery = [];
 const keywords = [];
-let keywordsFinal = [0];
+const keywordsFinal = [];
+let getArray = [];
+let removeDupl = [];
+const lim = removeDupl.length;
 
 function horns(obj) {
-    this.title = obj.title;
-    this.image_url = obj.image_url;
-    this.description = obj.description;
-    this.keyowrd = obj.keyword;
+  this.title = obj.title;
+  this.image_url = obj.image_url;
+  this.description = obj.description;
+  this.keyword = obj.keyword;
 
-    hornsGallery.push(this);
-    keywords.push(obj.keyword)
-    keywordsFinal = [...new Set(keywords)];
+  hornsGallery.push(this);
+  keywords.push(obj.keyword);
+  keywordsFinal.push([ ...new Set(keywords)]);
+  var store = localStorage.setItem('keys', JSON.stringify(keywordsFinal));
 }
+horns.prototype.render = function() {
 
-    horns.prototype.render = function() {
-
-    $('main').append('<div class="clone"></div>');
-    let $clone = $('div[class="clone"]');
-    let hornsTemplate = $('#photo-template').html();
-    $clone.html(hornsTemplate);
-    $clone.find('h2').text(this.title);
-    $clone.find('p').text(this.description);
-    $clone.find('img').attr('src', this.image_url);
-    $clone.removeClass('clone');
-    $clone.attr('class', this.title);  
+  $('main').append('<div class="clone"></div>');
+  let $clone = $('div[class="clone"]');
+  let hornsTemplate = $('#photo-template').html();
+  $clone.html(hornsTemplate);
+  $clone.find('h2').text(this.title);
+  $clone.find('p').text(this.description);
+  $clone.find('img').attr('src', this.image_url);
+  $clone.removeClass('clone');
+  $clone.attr('class', this.title);  
   
   }
 
+function readJson () {
 
-  function readJson () {
+  $.get('data/page-1.json', 'json')
 
-    $.get('data/page-1.json', 'json')
+    .then(data => {
+    data.forEach(hornsObj => {
+      new horns(hornsObj);
+      })
+  })
   
-      .then(data => {
-      data.forEach(hornsObj => {
-        new horns(hornsObj);
+    .then(function() {
+    hornsGallery.forEach(horns =>{
+    horns.render();
+
+    hornsGallery.forEach(horns => {
+  
         })
+      })
+  
     })
-  
-      .then(function() {
-      hornsGallery.forEach(horns =>{
-      horns.render();
-  
-      hornsGallery.forEach(horns => {
-  
-      })
-        })
-  
-      })
   }
    
   $(() => readJson());
 
-  const popFilter = function() {
-    keywords.forEach(element => {
-      console.log(element);
-      var doIt = true;
-      for(let i in keywordsFinal) {
-        if(element === keywordsFinal[i]) {
-          doIt = false;
-          break;
-        }
+  for(let i in keywords) {
 
-      }
-      if(doIt === true) {
-        keywordsFinal.push(element);
-      }
-      }) 
-      
   }
-
-  popFilter();
-
+  
+const popFilter = function() {
+  getArray = JSON.parse(localStorage.getItem('keys'));
+  $.each(getArray, function(index, element){ //From stack overflow
+    if($.inArray(element, removeDupl) === -1) removeDupl.push(element);
+  });
+  removeDupl = removeDupl[19];
+  for(let i in removeDupl)   {
+  $('.dropdown-menu').append( '<option value="'+removeDupl[i]+'">'+removeDupl[i]+'</option>' );
+      }
+}
+getArray = JSON.parse(localStorage.getItem('keys'));
 
 //add button to hide all pics but ones with selected data types
+popFilter();
+
+//selecting box filtering
+$('select[name="horn-picks"]').on('change', function() {
+  let $selection = $(this).val();
+  $('h2').hide()
+  $('img').hide()
+  $('p').hide()
+  $('img[id="${$selection}"]').show()
+  console.log($('img[id="${$selection}"]').show())
+ })
+
