@@ -1,14 +1,13 @@
 'use strict';
-
 //render pics to page
 const hornsGallery = [];
 const keywords = [];
 const keywordsFinal = [];
 let getArray = [];
 let removeDupl = [];
-const lim = removeDupl.length;
-let hornsImg;
-
+// const lim = removeDupl.length;
+// let hornsImg;
+//
 function Horns(obj) {
   this.title = obj.title;
   this.image_url = obj.image_url;
@@ -21,7 +20,6 @@ function Horns(obj) {
   localStorage.setItem('keys', JSON.stringify(keywordsFinal));
 }
 Horns.prototype.render = function() {
-
   $('main').append('<div class="clone"></div>');
   let $clone = $('div[class="clone"]');
   let hornsTemplate = $('#photo-template').html();
@@ -33,9 +31,7 @@ Horns.prototype.render = function() {
   $clone.attr('class', this.keyword);
 
 }
-
 function readJson () {
-
   $.get('data/page-1.json', 'json')
     .then(data => {
       data.forEach(hornsObj => {
@@ -48,7 +44,6 @@ function readJson () {
       })
     })
 }
-
 $(() => readJson());
 //
 const popFilter = function() {
@@ -62,10 +57,8 @@ const popFilter = function() {
   }
 }
 getArray = JSON.parse(localStorage.getItem('keys'));
-
 //add button to hide all pics but ones with selected data types
 popFilter();
-
 //selecting box filtering
 $('select[name="horn-picks"]').on('change', function() {
   if($(this).val() === 'default'){
