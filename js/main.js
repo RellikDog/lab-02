@@ -7,6 +7,7 @@ const keywordsFinal = [];
 let getArray = [];
 let removeDupl = [];
 const lim = removeDupl.length;
+let hornsImg;
 
 function Horns(obj) {
   this.title = obj.title;
