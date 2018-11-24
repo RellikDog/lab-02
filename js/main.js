@@ -13,7 +13,6 @@ function Horns(obj) {
   this.image_url = obj.image_url;
   this.description = obj.description;
   this.keyword = obj.keyword;
-
   hornsGallery.push(this);
   keywords.push(obj.keyword);
   keywordsFinal.push([ ...new Set(keywords)]);
@@ -29,7 +28,6 @@ Horns.prototype.render = function() {
   $clone.find('img').attr('src', this.image_url);
   $clone.removeClass('clone');
   $clone.attr('class', this.keyword);
-
 }
 function readJson () {
   $.get('data/page-1.json', 'json')
@@ -70,4 +68,3 @@ $('select[name="horn-picks"]').on('change', function() {
     console.log($(this).val())
   }
 })
-
