@@ -4,9 +4,8 @@
 const hornsGallery = [];
 const keywords = [];
 const keywordsFinal = [];
-let getArray = [];
-let removeDupl = [];
-const lim = removeDupl.length;
+let getArray = []; //For filtering array of keywords 
+let removeDupl = [];//For removing duplicates
 let hornsImg;
 
 function horns(obj) {
@@ -16,9 +15,9 @@ function horns(obj) {
   this.keyword = obj.keyword;
 
   hornsGallery.push(this);
-  keywords.push(obj.keyword);
-  keywordsFinal.push([ ...new Set(keywords)]);
-  var store = localStorage.setItem('keys', JSON.stringify(keywordsFinal));
+  keywords.push(obj.keyword); // Array for keywords
+  keywordsFinal.push([ ...new Set(keywords)]); //First step in removing duplicates from object
+  localStorage.setItem('keys', JSON.stringify(keywordsFinal)); //To remember keyword items
 }
 horns.prototype.render = function() {
 
@@ -65,14 +64,14 @@ function readJson () {
 const popFilter = function() {
   getArray = JSON.parse(localStorage.getItem('keys'));
   $.each(getArray, function(index, element){ //From stack overflow
-    if($.inArray(element, removeDupl) === -1) removeDupl.push(element);
+    if($.inArray(element, removeDupl) === -1) removeDupl.push(element); //Conditional for duplicate
   });
   removeDupl = removeDupl[19];
   for(let i in removeDupl)   {
   $('.dropdown-menu').append( '<option value="'+removeDupl[i]+'">'+removeDupl[i]+'</option>' );
       }
 }
-getArray = JSON.parse(localStorage.getItem('keys'));
+getArray = JSON.parse(localStorage.getItem('keys')); //Pulls array items in memory
 
 //add button to hide all pics but ones with selected data types
 popFilter();
