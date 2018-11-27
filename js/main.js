@@ -68,7 +68,7 @@ $('select[name="horn-picks"]').on('change', function() {
     console.log($(this).val())
   }
 })
-
+//lorins solution to dynamic keywords
 var names = ['Mike','Matt','Nancy','Adam','Jenny','Nancy','Carl'];
 var uniqueNames = [];
 $.each(names, function(i, el){
