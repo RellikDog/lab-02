@@ -6,7 +6,7 @@ const keywords = [];
 const keywordsFinal = [];
 let getArray = [];
 let removeDupl = [];
-const lim = removeDupl.length;
+let lim;
 let hornsImg;
 
 function Horns(obj) {
@@ -56,7 +56,8 @@ const popFilter = function() {
   $.each(getArray, function(index, element){ //From stack overflow
     if($.inArray(element, removeDupl) === -1) removeDupl.push(element);
   });
-  removeDupl = removeDupl[19];
+  lim = removeDupl.length - 1;
+  removeDupl = removeDupl[lim];
   for(let i in removeDupl) {
     $('.dropdown-menu').append( '<option value="'+removeDupl[i]+'">'+removeDupl[i]+'</option>' );
   }
